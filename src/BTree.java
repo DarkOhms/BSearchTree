@@ -31,7 +31,7 @@ public class BTree<T extends Comparable<T>> {
 	private void recursiveInsert(T data, BTreeNode<T> current){
 		
 		if(current.isLeaf()){
-			if(current.getData().compareTo(data)<0){
+			if(current.getData().compareTo(data)>0){
 				current.setLeft(new BTreeNode<T>(data));
 			}else
 				current.setRight(new BTreeNode<T>(data));
