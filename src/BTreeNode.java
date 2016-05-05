@@ -1,3 +1,22 @@
+/*
+ * Class BTreeNode
+ * 
+ * (+)BTreeNode<T>(T initialData, BTreeNode<T> initialLeft, BTreeNode<T> initialRight)
+ * (+)BTreeNode<T>(T newData)
+ * (+)BTreeNode<T>(BTreeNode<T> newItem)
+ * 
+ * Members
+ * (-)T data
+ * (-)BTreeNode<T> left, right
+ * 
+ * Methods
+ * (+)T getData()
+ * (+)void setData(T newData)
+ * (+)BTreeNode<T> getLeft(), getRight()
+ * (+)void setLeft(), setLeft()
+ * 
+ */
+
 
 public class BTreeNode<T extends Comparable<T>> {
 	
@@ -57,6 +76,16 @@ public class BTreeNode<T extends Comparable<T>> {
     	
     }
     
+    public void leftRightTraversal(BTreeNode<T> current){
+    	if(current.getLeft() != null)
+    		leftRightTraversal(current.getLeft());
+ 
+    	process(current);
+    	
+    	if(current.getRight() != null)
+    		leftRightTraversal(current.getRight()); 
+    }
+    
     public T getRightmostData(){
     	if(right == null)
     		return data;
@@ -74,13 +103,16 @@ public class BTreeNode<T extends Comparable<T>> {
     	}
     }
     
-    public BTreeNode<T> removeRightmost(){
-    	if(right == null)
-    		return left;
-    	else{
-    		right = right.removeRightmost();
-    		return this;
-    	}
-    }    
-    
+	public BTreeNode<T> removeRightmost(){
+		if(right == null)
+			return left;
+		else{
+			right = right.removeRightmost();
+			return this;
+		}
+	} 
+   
+	private void process(BTreeNode<T> node){
+	  System.out.println(String.valueOf(node.getData()));
+	} 
 }

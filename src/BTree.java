@@ -1,7 +1,29 @@
+/*
+ * BTree -------- 1 : m contains >> ---- BTreeNode
+   BTreeNode ---- 1 : 1 includes >> ---- Data
+   
+   Class BTree
+   
+   (+)BTree()
+   (+)BTree(BTreeNode<T>)
+   (+)BTree(T data)
+   
+   Members
+   
+   (-)BTreeNode<T> root
+   
+   Methods
+   
+   (+)insert(T data)
+     (-)recursiveInsert(T data, BTreeNode<T> current)
+   (+)inOrderTraversal()
+   (+)boolean search()
+     (-)boolean recursiveSearch()
+ */
 
 public class BTree<T extends Comparable<T>> {
 
-	BTreeNode<T> root;
+	private BTreeNode<T> root;
 	
 	public BTree(){
 		
@@ -28,15 +50,36 @@ public class BTree<T extends Comparable<T>> {
 		}
 	}
 	
+	public boolean search(T data){
+	  return recursiveSearch(data, root);
+	}
+	
+	private boolean recursiveSearch(T data, BTreeNode<T> current){
+		if(current == null){
+			return false;
+		}else{
+			if(current.getData().equals(data)){//found it
+				return true;
+			}else{//look to continue search left or right
+		
+				if(current.getData().compareTo(data) > 0){
+					return recursiveSearch(data, current.getLeft());
+				}else{
+					return recursiveSearch(data, current.getRight());
+				}
+			}//end not found in current
+		}//non null case
+	}
+	
 	private void recursiveInsert(T data, BTreeNode<T> current){
 		
 		if(current.isLeaf()){
-			if(current.getData().compareTo(data)>0){
+			if(current.getData().compareTo(data) > 0){
 				current.setLeft(new BTreeNode<T>(data));
 			}else
 				current.setRight(new BTreeNode<T>(data));
 		}else{
-			if(current.getData().compareTo(data)<0){//go left
+			if(current.getData().compareTo(data) > 0){//go left
 				
 				if(current.getLeft() == null){
 					current.setLeft(new BTreeNode<T>(data));
@@ -54,4 +97,13 @@ public class BTree<T extends Comparable<T>> {
 	   }//end not leaf case
 	}//end recursive insert
 	
+	 public void leftInOrderTraversal(){
+	    	
+		 root.leftRightTraversal(root);
+	    
+	 }
+	 
+	 public void delete(T data){
+		 
+	 }
 }
