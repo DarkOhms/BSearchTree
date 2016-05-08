@@ -23,5 +23,9 @@ public class Stub {
 	  }else{
 		  System.out.println(value + " NOT in the tree");
 	  } 
+	  
+	  myTree.delete("m");
+	  
+	  myTree.leftInOrderTraversal();
   }
 }

@@ -110,9 +110,28 @@ public class BTreeNode<T extends Comparable<T>> {
 			right = right.removeRightmost();
 			return this;
 		}
-	} 
+	}
+	
+	public BTreeNode<T> getImmediateSuccesor(){
+		if(right.isLeaf()){
+			return removeRightmost();
+		}else{
+		    return getRight().removeLeftmost();
+		}
+	}
+	
+	public BTreeNode<T> getImmediatePredecessor(){
+		
+		if(left.isLeaf()){
+			return removeLeftmost();
+		}else{
+		    return getLeft().removeRightmost();
+		}
+	}
    
 	private void process(BTreeNode<T> node){
 	  System.out.println(String.valueOf(node.getData()));
 	} 
+	
+	
 }

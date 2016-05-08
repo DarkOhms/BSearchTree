@@ -104,6 +104,47 @@ public class BTree<T extends Comparable<T>> {
 	 }
 	 
 	 public void delete(T data){
+		 if(search(data)){
+			 recursiveDelete(data, root);
+		 }
+	 }
+	 
+	 private void recursiveDelete(T data, BTreeNode<T> current){
+			 
+			 if(current.getData().equals(data)){//found it
+					if(current.isLeaf()){
+						current = null;
+					}else{
+						if(current.getLeft() != null && current.getRight() != null){
+							//promote immediate successor
+							promoteImmediateSuccessor(current);
+						}else{
+							if(current.getLeft() != null){
+								//promote immediate predecessor
+								promoteImmediatePredecessor(current);
+							}else{
+								//promote immediate successor
+								promoteImmediateSuccessor(current);
+							}
+						}
+					}
+				}else{//look to continue search left or right
+			
+					if(current.getData().compareTo(data) > 0){
+						recursiveDelete(data, current.getLeft());
+					}else{
+						recursiveDelete(data, current.getRight());
+					}
+				}//end not found in current 				 
+	 }
+	 
+	 private void promoteImmediateSuccessor(BTreeNode<T> current){
 		 
+		 current.setData(current.getImmediateSuccesor().getData());
+	 }
+	 
+     private void promoteImmediatePredecessor(BTreeNode<T> current){
+		 
+		 current.setData(current.getImmediatePredecessor().getData());
 	 }
 }
