@@ -11,9 +11,6 @@ public class Stub {
 	  myTree.insert("d");
 	  myTree.insert("n");
 	  
-	  //System.out.println(myTree.root.getData());
-	  //System.out.println(myTree.root.getLeftmostData());
-	  
 	  myTree.leftInOrderTraversal();
 	  
 	  String value = "n";
@@ -24,7 +21,12 @@ public class Stub {
 		  System.out.println(value + " NOT in the tree");
 	  } 
 	  
+	  //delete and check
 	  myTree.delete("m");
+	  
+	  myTree.leftInOrderTraversal();
+	  
+	  myTree.delete("b");
 	  
 	  myTree.leftInOrderTraversal();
   }

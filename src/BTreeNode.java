@@ -76,6 +76,14 @@ public class BTreeNode<T extends Comparable<T>> {
     	
     }
     
+    public BTreeNode<T> getLeftmost(BTreeNode<T> current){
+    	if(current.getLeft() == null)
+    		return current;
+    	else
+    		return getLeftmost(current.getLeft());
+    	
+    }
+    
     public void leftRightTraversal(BTreeNode<T> current){
     	if(current.getLeft() != null)
     		leftRightTraversal(current.getLeft());
@@ -91,6 +99,14 @@ public class BTreeNode<T extends Comparable<T>> {
     		return data;
     	else
     		return right.getRightmostData();
+    	
+    }
+    
+    public BTreeNode<T> getRightmost(BTreeNode<T> current){
+    	if(current.getRight() == null)
+    		return this;
+    	else
+    		return getRightmost(current.getRight());
     	
     }
     
@@ -112,21 +128,30 @@ public class BTreeNode<T extends Comparable<T>> {
 		}
 	}
 	
-	public BTreeNode<T> getImmediateSuccesor(){
+	public T getImmediateSuccesorData(){
+		T data;
+		
 		if(right.isLeaf()){
-			return removeRightmost();
+			data = right.getData();
+			removeRightmost();
 		}else{
-		    return getRight().removeLeftmost();
+			data = right.getLeftmostData();
+			right.removeLeftmost();
 		}
+		return data;
 	}
 	
-	public BTreeNode<T> getImmediatePredecessor(){
+	public T getImmediatePredecessorData(){
+		T data;
 		
 		if(left.isLeaf()){
-			return removeLeftmost();
+			data = left.getData();
+			removeLeftmost();
 		}else{
-		    return getLeft().removeRightmost();
+		    data = left.getRightmostData();
+			left.removeRightmost();
 		}
+		return data;
 	}
    
 	private void process(BTreeNode<T> node){

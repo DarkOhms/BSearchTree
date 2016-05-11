@@ -140,11 +140,20 @@ public class BTree<T extends Comparable<T>> {
 	 
 	 private void promoteImmediateSuccessor(BTreeNode<T> current){
 		 
-		 current.setData(current.getImmediateSuccesor().getData());
+		 recursivePromoteSuccessor(current);
+	
+	 }
+	 
+	 private void recursivePromoteSuccessor(BTreeNode<T> current){
+		 if(current.getRight() == null){//limit call
+			 current = null;
+		 }else{
+			 current.setData(current.getRight().getLeftmostData());
+			 recursivePromoteSuccessor(current.getLeftmost(current.getRight()));
+		 }
 	 }
 	 
      private void promoteImmediatePredecessor(BTreeNode<T> current){
-		 
-		 current.setData(current.getImmediatePredecessor().getData());
+		 current.setData(current.getImmediatePredecessorData());
 	 }
 }
