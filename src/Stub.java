@@ -4,12 +4,15 @@ public class Stub {
 	  
 	  BTree<String> myTree = new BTree<String>("m");
 	  
-	  myTree.insert("p");
+
+      myTree.insert("p");
 	  myTree.insert("b");
 	  myTree.insert("a");
 	  myTree.insert("c");
 	  myTree.insert("d");
-	  myTree.insert("n");
+	  myTree.insert("z");
+	  myTree.insert("f");
+	  myTree.insert("x");
 	  
 	  myTree.leftInOrderTraversal();
 	  
@@ -23,11 +26,12 @@ public class Stub {
 	  
 	  //delete and check
 	  myTree.delete("m");
+	  System.out.println("==========================================");
 	  
 	  myTree.leftInOrderTraversal();
 	  
 	  myTree.delete("b");
-	  
+	  System.out.println("==========================================");
 	  myTree.leftInOrderTraversal();
   }
 }

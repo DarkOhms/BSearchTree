@@ -113,7 +113,7 @@ public class BTree<T extends Comparable<T>> {
 			 
 			 if(current.getData().equals(data)){//found it
 					if(current.isLeaf()){
-						current = null;
+						current.setData(null);
 					}else{
 						if(current.getLeft() != null && current.getRight() != null){
 							//promote immediate successor
@@ -146,14 +146,24 @@ public class BTree<T extends Comparable<T>> {
 	 
 	 private void recursivePromoteSuccessor(BTreeNode<T> current){
 		 if(current.getRight() == null){//limit call
-			 current = null;
+             
 		 }else{
 			 current.setData(current.getRight().getLeftmostData());
 			 recursivePromoteSuccessor(current.getLeftmost(current.getRight()));
+			 current.setRight(current.getRight().removeLeftmost());
 		 }
 	 }
 	 
      private void promoteImmediatePredecessor(BTreeNode<T> current){
-		 current.setData(current.getImmediatePredecessorData());
-	 }
+		recursivePromotePredecessor(current);
+	}
+    private void recursivePromotePredecessor(BTreeNode<T> current){ 
+	     if(current.getLeft() == null){//limit call
+	         
+		 }else{
+			 current.setData(current.getLeft().getRightmostData());
+			 recursivePromotePredecessor(current.getRightmost(current.getLeft()));
+			 current.setLeft(current.getLeft().removeRightmost());
+		 }
+    }
 }

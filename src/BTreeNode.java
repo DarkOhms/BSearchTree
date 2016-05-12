@@ -84,6 +84,14 @@ public class BTreeNode<T extends Comparable<T>> {
     	
     }
     
+    public BTreeNode<T> getLeftmostParent(BTreeNode<T> current){
+    	if(current.getLeft().getLeft() == null)
+    		return current;
+    	else
+    		return getLeftmost(current.getLeft());
+    	
+    }
+    
     public void leftRightTraversal(BTreeNode<T> current){
     	if(current.getLeft() != null)
     		leftRightTraversal(current.getLeft());
