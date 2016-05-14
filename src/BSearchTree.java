@@ -119,7 +119,11 @@ public class BSearchTree<T extends Comparable<T>> {
 
     if (current.getData().equals(data)) {// found it
       if (current.isLeaf()) {
-        current.setData(null);
+        if(parentOfCursor.getRight() == current){
+          parentOfCursor.setRight(null);
+        }else{
+          parentOfCursor.setLeft(null);
+        }
       } else {
         if (current.getLeft() != null && current.getRight() != null) {
           // promote immediate successor
@@ -128,14 +132,11 @@ public class BSearchTree<T extends Comparable<T>> {
           if (current.getLeft() != null) {
             // promote immediate predecessor
             promoteImmediatePredecessor(current);
-          } else {
-            // promote immediate successor
-            promoteImmediateSuccessor(current);
           }
         }
       }
     } else {// look to continue search left or right
-
+      parentOfCursor = current;
       if (current.getData().compareTo(data) > 0) {
         recursiveDelete(data, current.getLeft());
       } else {

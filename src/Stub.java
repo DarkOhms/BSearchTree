@@ -39,9 +39,9 @@ public class Stub {
     myTree.rightInOrderTraversal();
 
     // delete and check
+    myTree.delete("Distributed Processing");
     myTree.delete("Isolation");
     myTree.delete("Normalization");
-    myTree.delete("Distributed Processing");
      
     System.out.println("==========================================");
     myTree.leftInOrderTraversal();
