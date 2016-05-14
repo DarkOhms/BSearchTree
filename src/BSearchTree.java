@@ -1,12 +1,12 @@
 /*
- * BTree -------- 1 : m contains >> ---- BTreeNode
+ * BSearchTree -------- 1 : m contains >> ---- BTreeNode
    BTreeNode ---- 1 : 1 includes >> ---- Data
    
-   Class BTree
+   Class BSearchTree
    
-   (+)BTree()
-   (+)BTree(BTreeNode<T>)
-   (+)BTree(T data)
+   (+)BSearchTree()
+   (+)BSearchTree(BTreeNode<T>)
+   (+)BSearchTree(T data)
    
    Members
    
@@ -21,29 +21,30 @@
      (-)boolean recursiveSearch()
  */
 
-public class BTree<T extends Comparable<T>> {
+public class BSearchTree<T extends Comparable<T>> {
 
   private BTreeNode<T> root;
+  private BTreeNode<T> parentOfCursor;
 
-  public BTree() {
+  public BSearchTree() {
 
   }
 
-  public BTree(BTreeNode<T> newRoot) {
+  public BSearchTree(BTreeNode<T> newRoot) {
     root = newRoot;
   }
 
-  public BTree(T data) {
+  public BSearchTree(T data) {
     root = new BTreeNode<T>(data);
   }
 
   /*
-   * public BTree(BTree<T>){ copy tree }
+   * public BSearchTree(BSearchTree<T>){ copy tree }
    */
 
   public void insert(T data) {
     if (root == null) {
-      root.setData(data);
+      root = new BTreeNode<T>(data);
     } else {
       recursiveInsert(data, root);
     }
@@ -101,6 +102,12 @@ public class BTree<T extends Comparable<T>> {
     root.leftRightTraversal(root);
 
   }
+  
+  public void rightInOrderTraversal() {
+
+    root.rightLeftTraversal(root);
+
+  }
 
   public void delete(T data) {
     if (search(data)) {
@@ -138,32 +145,35 @@ public class BTree<T extends Comparable<T>> {
   }
 
   private void promoteImmediateSuccessor(BTreeNode<T> current) {
-
+    parentOfCursor = null;
+  
     recursivePromoteSuccessor(current);
 
   }
 
   private void recursivePromoteSuccessor(BTreeNode<T> current) {
     if (current.getRight() == null) {// limit call
-
+      parentOfCursor.setRight(parentOfCursor.getRight().removeLeftmost());
     } else {
       current.setData(current.getRight().getLeftmostData());
+      parentOfCursor = current;
       recursivePromoteSuccessor(current.getLeftmost(current.getRight()));
-      current.setRight(current.getRight().removeLeftmost());
     }
   }
 
   private void promoteImmediatePredecessor(BTreeNode<T> current) {
+    parentOfCursor = null;
+    
     recursivePromotePredecessor(current);
   }
 
   private void recursivePromotePredecessor(BTreeNode<T> current) {
     if (current.getLeft() == null) {// limit call
-
+      parentOfCursor.setLeft(parentOfCursor.getLeft().removeRightmost());
     } else {
       current.setData(current.getLeft().getRightmostData());
+      parentOfCursor = current;
       recursivePromotePredecessor(current.getRightmost(current.getLeft()));
-      current.setLeft(current.getLeft().removeRightmost());
     }
   }
 }

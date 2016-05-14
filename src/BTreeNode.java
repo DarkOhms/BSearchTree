@@ -83,14 +83,6 @@ public class BTreeNode<T extends Comparable<T>> {
 
   }
 
-  public BTreeNode<T> getLeftmostParent(BTreeNode<T> current) {
-    if (current.getLeft().getLeft() == null)
-      return current;
-    else
-      return getLeftmost(current.getLeft());
-
-  }
-
   public void leftRightTraversal(BTreeNode<T> current) {
     if (current.getLeft() != null)
       leftRightTraversal(current.getLeft());
@@ -99,6 +91,16 @@ public class BTreeNode<T extends Comparable<T>> {
 
     if (current.getRight() != null)
       leftRightTraversal(current.getRight());
+  }
+  
+  public void rightLeftTraversal(BTreeNode<T> current) {
+    if (current.getRight() != null)
+      rightLeftTraversal(current.getRight());
+
+    process(current);
+
+      if (current.getLeft() != null)
+        rightLeftTraversal(current.getLeft());
   }
 
   public T getRightmostData() {
@@ -111,7 +113,7 @@ public class BTreeNode<T extends Comparable<T>> {
 
   public BTreeNode<T> getRightmost(BTreeNode<T> current) {
     if (current.getRight() == null)
-      return this;
+      return current;
     else
       return getRightmost(current.getRight());
 
